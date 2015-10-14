@@ -56,7 +56,7 @@ window.handleAuthClick = function (event) {
     let playerSuggestion = $('#playerSuggestion')
     let form = $('#playerVotingForm')
 
-    if (sessionStorage.getItem('hasVoted')) {
+    if (localStorage.getItem('hasVoted')) {
       form.addClass('hidden').after(`
         <div class="row">
           <div class="col-md-12">You've already voted.</div>
@@ -97,7 +97,7 @@ window.handleAuthClick = function (event) {
           })
           request.execute(function (response) {
             if (response.hasOwnProperty('result')) {
-              sessionStorage.setItem('hasVoted', true)
+              localStorage.setItem('hasVoted', true)
               form.addClass('hidden').after(`
                 <div class="row">
                   <div class="col-md-12">Thanks for your vote!.</div>
