@@ -3,3 +3,4 @@ README.md
 index.js
 js/src/*.js
 package.json
+js/processed/*.js
