@@ -55,12 +55,15 @@ window.handleAuthClick = function (event) {
     let playerSuggestionCheckbox = $('#opt-playerSuggestion')
     let playerSuggestionWrapper = $('#playerSuggestionWrapper')
     let playerSuggestion = $('#playerSuggestion')
-    let form = $('#playerVotingForm')
+    let submitBtn = $('#submitBtn')
+    let container = $('.container')
 
     if (localStorage.getItem('hasVoted')) {
-      form.addClass('hidden').after(`
-        <div class="row">
-          <div class="col-md-12">You've already voted.</div>
+      container.addClass('hidden').after(`
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">You've already voted.</div>
+          </div>
         </div>`)
     }
 
@@ -72,7 +75,7 @@ window.handleAuthClick = function (event) {
       }
     })
 
-    form.on('submit', e => {
+    submitBtn.on('click', e => {
       let name = playerName.val().trim()
       if (name.length) {
         let adventure = nextAdventure.filter(':checked').val()
@@ -100,8 +103,10 @@ window.handleAuthClick = function (event) {
             if (response.hasOwnProperty('result')) {
               localStorage.setItem('hasVoted', true)
               form.addClass('hidden').after(`
-                <div class="row">
-                  <div class="col-md-12">Thanks for your vote!.</div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-12">Thanks for your vote!.</div>
+                  </div>
                 </div>`)
             } else {
               console.log(`Got error ${response.error.code}: ${response.error.message}`)
@@ -109,6 +114,8 @@ window.handleAuthClick = function (event) {
           })
         })
       }
+      e.preventDefault()
+      e.stopPropagation()
       return false
     })
   })

@@ -18,48 +18,46 @@
     <div class="row">
       <h1>Vote on Campaign #2</h1>
     </div>
-    <form id="playerVotingForm" method="POST" action="/">
-      <div class="row">
-        <div class="col-md-6">
-          <label>Player name: <input type="text" class="form-control" id="playerName" name="playerName" placeholder="Player name" required></label>
-        </div>
-        <div class="col-md-6"></div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>Player name: <input type="text" class="form-control" id="playerName" name="playerName" placeholder="Player name" required></label>
       </div>
-      <div class="row">
-        <div class="col-md-3">
-          <label>Head to the Sword Coast <input type="radio" class="form-control" id="opt-swordCoast" name="nextAdventure" value="Head to the Sword Coast" checked></label>
-        </div>
-        <div class="col-md-3">
-          <label>Head to the Underdark <input type="radio" class="form-control" id="opt-underdark" name="nextAdventure" value="Head to the Underdark"></label>
-        </div>
-        <div class="col-md-3">
-          <label>Fight some Elemental Evil (Your DM is ambivalent to this one) <input type="radio" class="form-control" id="opt-elementalEvil" name="nextAdventure" value="Fight some Elemental Evil"></label>
-        </div>
-        <div class="col-md-3"></div>
+      <div class="col-md-6"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label>Head to the Sword Coast <input type="radio" class="form-control" id="opt-swordCoast" name="nextAdventure" value="Head to the Sword Coast" checked></label>
       </div>
-      <div class="row">
-        <div class="col-md-3">
-          <label>Level up and Fight a Dragon! <input type="radio" class="form-control" id="opt-dragon" name="nextAdventure" value="Level up and Fight a Dragon!"></label>
-        </div>
-        <div class="col-md-3">
-          <label>Custom campaign! <input type="radio" class="form-control" id="opt-customCampaign" name="nextAdventure" value="Custom campaign!"></label>
-        </div>
-        <div class="col-md-3">
-          <label>None of these, let me suggest one: <input type="radio" class="form-control" id="opt-playerSuggestion" name="nextAdventure" value="None of these, let me suggest one:"></label>
-        </div>
-        <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <label>Head to the Underdark <input type="radio" class="form-control" id="opt-underdark" name="nextAdventure" value="Head to the Underdark"></label>
       </div>
-      <div class="row hidden" id="playerSuggestionWrapper">
-        <div class="col-md-12">
-          <textarea class="form-control" rows="5" id="playerSuggestion" name="playerSuggestion" placeholder="Alright, I'm listening..." resizable="no"></textarea>
-        </div>
+      <div class="col-md-3">
+        <label>Fight some Elemental Evil (Your DM is ambivalent to this one) <input type="radio" class="form-control" id="opt-elementalEvil" name="nextAdventure" value="Fight some Elemental Evil"></label>
       </div>
-      <div class="row">
-        <div class="col-md-2">
-          <button type="submit" id="submitBtn" class="form-control">Send it off</button>
-        </div>
+      <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label>Level up and Fight a Dragon! <input type="radio" class="form-control" id="opt-dragon" name="nextAdventure" value="Level up and Fight a Dragon!"></label>
       </div>
-    </form>
+      <div class="col-md-3">
+        <label>Custom campaign! <input type="radio" class="form-control" id="opt-customCampaign" name="nextAdventure" value="Custom campaign!"></label>
+      </div>
+      <div class="col-md-3">
+        <label>None of these, let me suggest one: <input type="radio" class="form-control" id="opt-playerSuggestion" name="nextAdventure" value="None of these, let me suggest one:"></label>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <div class="row hidden" id="playerSuggestionWrapper">
+      <div class="col-md-12">
+        <textarea class="form-control" rows="5" id="playerSuggestion" name="playerSuggestion" placeholder="Alright, I'm listening..." resizable="no"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <button type="submit" id="submitBtn" class="form-control">Send it off</button>
+      </div>
+    </div>
   </div>
 
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
