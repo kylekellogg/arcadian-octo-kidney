@@ -101,7 +101,7 @@ window.handleAuthClick = function (event) {
               sessionStorage.setItem('hasVoted', true)
               form.addClass('hidden').after(`
                 <div class="row">
-                  <div class="col-md-12">You've already voted.</div>
+                  <div class="col-md-12">Thanks for your vote!.</div>
                 </div>`)
             } else {
               console.log(`Got error ${response.error.code}: ${response.error.message}`)
