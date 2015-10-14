@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, gapi,  */
 require('babel/register')
 
 var CLIENT_ID = '763097997045-5b0u8pqs2veomi97761vm31j728vk5sa.apps.googleusercontent.com'
@@ -16,7 +16,7 @@ window.authenticate = function () {
     client_id: CLIENT_ID,
     scope: SCOPES.join(' '),
     immediate: true
-  }, handleAuthResult)
+  }, window.handleAuthResult)
 }
 
 window.handleAuthResult = function (authResult) {
@@ -40,7 +40,7 @@ window.handleAuthClick = function (event) {
     client_id: CLIENT_ID,
     scope: SCOPES,
     immediate: false
-  }, handleAuthResult)
+  }, window.handleAuthResult)
 
   return false
 }
@@ -57,7 +57,7 @@ window.handleAuthClick = function (event) {
     let submitBtn = $('#submitBtn')
     let container = $('.container')
 
-    if (localStorage.getItem('hasVoted')) {
+    if (window.localStorage.getItem('hasVoted')) {
       container.addClass('hidden').after(`
         <div class="container">
           <div class="row">
@@ -95,13 +95,13 @@ window.handleAuthClick = function (event) {
           let request = gapi.client.gmail.users.messages.send({
             userId: 'me',
             resource: {
-              raw: btoa(message)
+              raw: window.btoa(message)
             }
           })
           request.execute(function (response) {
             if (response.hasOwnProperty('result')) {
-              localStorage.setItem('hasVoted', true)
-              form.addClass('hidden').after(`
+              window.localStorage.setItem('hasVoted', true)
+              container.addClass('hidden').after(`
                 <div class="container">
                   <div class="row">
                     <div class="col-md-12">Thanks for your vote!.</div>

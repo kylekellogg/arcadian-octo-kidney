@@ -1,125 +1,106 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/* global $ */
-require('babel/register')
+/* global $, gapi,  */
+'use strict';
 
-var CLIENT_ID = '763097997045-5b0u8pqs2veomi97761vm31j728vk5sa.apps.googleusercontent.com'
-var SCOPES = [
-  'https://mail.google.com/',
-  'https://www.googleapis.com/auth/gmail.modify',
-  'https://www.googleapis.com/auth/gmail.compose',
-  'https://www.googleapis.com/auth/gmail.send'
-]
+require('babel/register');
+
+var CLIENT_ID = '763097997045-5b0u8pqs2veomi97761vm31j728vk5sa.apps.googleusercontent.com';
+var SCOPES = ['https://mail.google.com/', 'https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/gmail.compose', 'https://www.googleapis.com/auth/gmail.send'];
 
 window.authenticate = function () {
-  'use strict'
+  'use strict';
 
   gapi.auth.authorize({
     client_id: CLIENT_ID,
     scope: SCOPES.join(' '),
     immediate: true
-  }, handleAuthResult)
-}
+  }, window.handleAuthResult);
+};
 
 window.handleAuthResult = function (authResult) {
-  'use strict'
+  'use strict';
 
-  var authorizeDiv = $('#authorize-div')
+  var authorizeDiv = $('#authorize-div');
   if (authResult && !authResult.error) {
     // Hide auth UI, then load client library.
-    authorizeDiv.addClass('hidden')
+    authorizeDiv.addClass('hidden');
   } else {
     // Show auth UI, allowing the user to initiate authorization by
     // clicking authorize button.
-    authorizeDiv.removeClass('hidden')
+    authorizeDiv.removeClass('hidden');
   }
-}
+};
 
 window.handleAuthClick = function (event) {
-  'use strict'
+  'use strict';
 
   gapi.auth.authorize({
     client_id: CLIENT_ID,
     scope: SCOPES,
     immediate: false
-  }, handleAuthResult)
+  }, window.handleAuthResult);
 
-  return false
-}
+  return false;
+};(function () {
+  'use strict';
 
-;(function () {
-  'use strict'
+  $(document).ready(function (jQ) {
+    var playerName = $('#playerName');
+    var nextAdventure = $('input[name=nextAdventure]');
+    var playerSuggestionCheckbox = $('#opt-playerSuggestion');
+    var playerSuggestionWrapper = $('#playerSuggestionWrapper');
+    var playerSuggestion = $('#playerSuggestion');
+    var submitBtn = $('#submitBtn');
+    var container = $('.container');
 
-  $(document).ready(jQ => {
-    let playerName = $('#playerName')
-    let nextAdventure = $('input[name=nextAdventure]')
-    let playerSuggestionCheckbox = $('#opt-playerSuggestion')
-    let playerSuggestionWrapper = $('#playerSuggestionWrapper')
-    let playerSuggestion = $('#playerSuggestion')
-    let submitBtn = $('#submitBtn')
-    let container = $('.container')
-
-    if (localStorage.getItem('hasVoted')) {
-      container.addClass('hidden').after(`
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">You've already voted.</div>
-          </div>
-        </div>`)
+    if (window.localStorage.getItem('hasVoted')) {
+      container.addClass('hidden').after('\n        <div class="container">\n          <div class="row">\n            <div class="col-md-12">You\'ve already voted.</div>\n          </div>\n        </div>');
     }
 
-    nextAdventure.on('click', e => {
+    nextAdventure.on('click', function (e) {
       if (playerSuggestionCheckbox.is(':checked')) {
-        playerSuggestionWrapper.removeClass('hidden')
+        playerSuggestionWrapper.removeClass('hidden');
       } else {
-        playerSuggestionWrapper.addClass('hidden')
+        playerSuggestionWrapper.addClass('hidden');
       }
-    })
+    });
 
-    submitBtn.on('click', e => {
-      let name = playerName.val().trim()
+    submitBtn.on('click', function (e) {
+      var name = playerName.val().trim();
       if (name.length) {
-        let adventure = nextAdventure.filter(':checked').val()
-        let suggestion = playerSuggestion.val().trim() || 'No suggestion'
-        console.log(`playerName ${name}`)
-        console.log(`nextAdventure ${adventure}`)
-        console.log(`playerSuggestion ${suggestion}`)
+        (function () {
+          var adventure = nextAdventure.filter(':checked').val();
+          var suggestion = playerSuggestion.val().trim() || 'No suggestion';
+          console.log('playerName ' + name);
+          console.log('nextAdventure ' + adventure);
+          console.log('playerSuggestion ' + suggestion);
 
-        gapi.client.load('gmail', 'v1', function () {
-          let message = [
-            'From: Kyle Kellog <kyle@kylekellogg.com>',
-            'To: Kyle Kellogg <kyle@kylekellogg.com>',
-            'Content-Type: text/plain',
-            'Subject: D&D Player Vote',
-            '',
-            `Player ${name} is voting for ${adventure} with the suggestion ${suggestion}`
-          ].join('\n').trim()
-          let request = gapi.client.gmail.users.messages.send({
-            userId: 'me',
-            resource: {
-              raw: btoa(message)
-            }
-          })
-          request.execute(function (response) {
-            if (response.hasOwnProperty('result')) {
-              localStorage.setItem('hasVoted', true)
-              form.addClass('hidden').after(`
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-12">Thanks for your vote!.</div>
-                  </div>
-                </div>`)
-            } else {
-              console.log(`Got error ${response.error.code}: ${response.error.message}`)
-            }
-          })
-        })
+          gapi.client.load('gmail', 'v1', function () {
+            var message = ['From: Kyle Kellog <kyle@kylekellogg.com>', 'To: Kyle Kellogg <kyle@kylekellogg.com>', 'Content-Type: text/plain', 'Subject: D&D Player Vote', '', 'Player ' + name + ' is voting for ' + adventure + ' with the suggestion ' + suggestion].join('\n').trim();
+            var request = gapi.client.gmail.users.messages.send({
+              userId: 'me',
+              resource: {
+                raw: window.btoa(message)
+              }
+            });
+            request.execute(function (response) {
+              if (response.hasOwnProperty('result')) {
+                window.localStorage.setItem('hasVoted', true);
+                container.addClass('hidden').after('\n                <div class="container">\n                  <div class="row">\n                    <div class="col-md-12">Thanks for your vote!.</div>\n                  </div>\n                </div>');
+              } else {
+                console.log('Got error ' + response.error.code + ': ' + response.error.message);
+              }
+            });
+          });
+        })();
       }
-      e.preventDefault()
-      e.stopPropagation()
-      return false
-    })
-  })
-})()
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    });
+  });
+})();
+
 
 },{"babel/register":191}],2:[function(require,module,exports){
 // required to safely use babel/register within a browserify codebase
